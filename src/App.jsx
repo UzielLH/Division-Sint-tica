@@ -161,33 +161,53 @@ function App() {
         Daniel Yosef Santiago García
       </h4>
       <form onSubmit={handleSubmit}>
-  <div>
-    <label>Grado del Polinomio:</label>
+      <div>
+  <label>Grado del Polinomio:</label>
+  <input 
+    type="text" 
+    value={gradoPolinomio} 
+    onChange={(e) => {
+      const value = e.target.value;
+
+      if (/^\d*$/.test(value)) { // Permite solo enteros positivos
+        setGradoPolinomio(value);
+      } else if (/^-/.test(value)) { // Detecta si se intenta ingresar un número negativo
+        Swal.fire({
+          title: 'Entrada inválida',
+          text: 'El grado del polinomio debe ser un número entero positivo.',
+          icon: 'warning',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    }} 
+  />
+</div>
+
+  {[...Array(parseInt(gradoPolinomio) + 1 || 0)].map((_, index) => (
+  <div key={index}>
+    <label>Coeficiente de x^{gradoPolinomio - index}:</label>
     <input 
       type="text" 
-      value={gradoPolinomio} 
       onChange={(e) => {
         const value = e.target.value;
-        if (/^-?\d*$/.test(value)) { // Permite solo enteros positivos o negativos
-          setGradoPolinomio(value);
+        // Permitir solo números negativos o decimales y reemplazar cualquier carácter inválido
+        if (/^-?\d*\.?\d*$/.test(value) || value === "") { 
+          handleCoeficienteChange(index, value);
+        } else {
+          Swal.fire({
+            title: 'Entrada inválida',
+            text: 'Por favor, ingresa solo números.',
+            icon: 'error',
+            timer: 1500,
+            showConfirmButton: false
+          });
         }
-      }} 
+      }}
     />
   </div>
-  {[...Array(parseInt(gradoPolinomio) + 1 || 0)].map((_, index) => (
-    <div key={index}>
-      <label>Coeficiente de x^{gradoPolinomio - index}:</label>
-      <input 
-        type="text" 
-        onChange={(e) => {
-          const value = e.target.value;
-          if (/^-?\d*\.?\d*$/.test(value)) { // Permite números negativos y decimales
-            handleCoeficienteChange(index, value);
-          }
-        }}
-      />
-    </div>
-  ))}
+))}
+
   <br />
   <button type="submit" className="button-group">Calcular</button>
   <button type="button" className="button-group" onClick={handleClear}>Limpiar</button>
