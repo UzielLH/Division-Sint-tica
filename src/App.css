@@ -1,0 +1,80 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.division-sintetica {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.division-step {
+  margin-bottom: 15px;
+}
+
+/* Estilo general de la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+
+/* Aplica el borde debajo de la primera fila del tbody */
+tbody tr:first-child {
+  border-bottom: 2px solid white;
+}
+
+/* Aplica un borde a la penúltima celda antes de la columna del divisor */
+.borde-derecho {
+  border-right: 2px solid white; /* Puedes ajustar el grosor y el color */
+}
+
+tbody td {
+  border: none;
+}
+
+
+
