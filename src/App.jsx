@@ -161,15 +161,20 @@ function App() {
         Daniel Yosef Santiago García
       </h4>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Grado del Polinomio:</label>
-          <input type="number" value={gradoPolinomio} onChange={handleGradoChange} />
-        </div>
-        {[...Array(parseInt(gradoPolinomio) + 1 || 0)].map((_, index) => (
-          <div key={index}>
-            <label>Coeficiente de x^{gradoPolinomio - index}:</label>
-            <input type="number" onChange={(e) => handleCoeficienteChange(index, e.target.value)} />
-          </div>
+      <div>
+  <label>Grado del Polinomio:</label>
+  <input type="number" value={gradoPolinomio} onChange={handleGradoChange} />
+  </div>
+  {[...Array(parseInt(gradoPolinomio) + 1 || 0)].map((_, index) => (
+    <div key={index}>
+      <label>Coeficiente de x^{gradoPolinomio - index}:</label>
+      <input 
+        type="number" 
+        inputMode="numeric" 
+        pattern="-?[0-9]*" 
+        onChange={(e) => handleCoeficienteChange(index, e.target.value)} 
+      />
+    </div>
         ))}
         <br />
         <button type="submit" className="button-group">Calcular</button>
