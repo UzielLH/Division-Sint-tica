@@ -97,6 +97,18 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  
+    if (!gradoPolinomio || isNaN(parseInt(gradoPolinomio))) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Por favor, ingresa un grado válido para el polinomio.',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      return;
+    }
+  
     const divisores = calcularDivisoresRacionales(coeficientes);
     setDivisores(divisores);
     const raices = divisionSintetica(divisores, coeficientes);
@@ -122,6 +134,7 @@ function App() {
       });
     }
   };
+  
   
   
 
