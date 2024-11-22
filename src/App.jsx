@@ -52,15 +52,15 @@ function App() {
   };
 
   const divisionSintetica = (divisoresRacionales, coeficientes) => {
-    let raices = new Set();
+    let raices = []; // Cambiamos Set a Array
     let logVisual = [];
-
+  
     function encontrarRaices(divisores, coeficientes, raices) {
       for (let divisor of divisores) {
         let resultadoDivision = [coeficientes[0]];
         let multiplicaciones = [];
         let resultados = [coeficientes[0]];
-
+  
         // Proceso de división sintética
         for (let i = 1; i < coeficientes.length; i++) {
           let multiplicacion = divisor * resultados[i - 1];
@@ -68,20 +68,20 @@ function App() {
           let suma = coeficientes[i] + multiplicacion;
           resultados.push(suma);
         }
-
+  
         // Solo guardamos el log si el último valor en resultados es 0
         if (Math.abs(resultados[resultados.length - 1]) < 1e-6) {
-          raices.add(divisor);
+          raices.push(divisor); // Agregamos la raíz al array, permitiendo duplicados
           logVisual.push({
             divisor,
             coeficientes: [...coeficientes],
             multiplicaciones: [...multiplicaciones],
             resultados: [...resultados]
           });
-
+  
           // Actualizamos los coeficientes quitando el último término (residuo)
           coeficientes = resultados.slice(0, resultados.length - 1);
-
+  
           // Recalculamos los divisores para el polinomio reducido
           let nuevosDivisores = calcularDivisoresRacionales(coeficientes);
           encontrarRaices(nuevosDivisores, coeficientes, raices);
@@ -89,10 +89,10 @@ function App() {
         }
       }
     }
-
+  
     encontrarRaices(divisoresRacionales, coeficientes, raices);
     setLogVisual(logVisual);
-    return Array.from(raices);
+    return raices; // Devolvemos el array con duplicados
   };
 
   const handleSubmit = (e) => {
@@ -115,7 +115,7 @@ function App() {
     setRaices(raices);
   
     // Verificar si se encontraron todas las raíces
-    if (raices.length < coeficientes.length - 1) {
+    if (raices.length < parseInt(gradoPolinomio)) {
       Swal.fire({
         title: 'Advertencia',
         text: 'No se encontraron todas las raíces racionales.',
@@ -124,7 +124,6 @@ function App() {
         showConfirmButton: false
       });
     } else {
-      // Si se encuentran todas las raíces
       Swal.fire({
         title: 'Éxito',
         text: 'Se encontraron todas las raíces racionales.',
@@ -133,6 +132,7 @@ function App() {
         showConfirmButton: false
       });
     }
+    
   };
   
   
@@ -232,9 +232,12 @@ function App() {
       <p>{generarPolinomio(coeficientes)}</p>
       <h2>Raíces Encontradas:</h2>
 <p>
-  {raices.map(raiz => 
-    Number.isInteger(raiz) ? raiz : raiz.toFixed(4)
-  ).join(', ')}
+  {raices.map((raiz, index) => (
+    <span key={index}>
+      {Number.isInteger(raiz) ? raiz : raiz.toFixed(4)}
+      {index < raices.length - 1 && ", "}
+    </span>
+  ))}
 </p>
 
 
